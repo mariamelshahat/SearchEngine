@@ -1,46 +1,51 @@
 ﻿@model IEnumerable<SearchResult>
 
-<div class="container mt-4">
-    <h2>Search Engine</h2>
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <h1 class="display-5 fw-bold text-primary">كوكل - محرك بحث</h1>
+        <p class="lead text-muted">ابحث عن الكلمات في صفحات الويب المصنفة حسب الأهمية</p>
+    </div>
 
-    <form method="get" asp-action="Search" class="mb-4">
-        <div class="input-group">
-            <input type="text" name="query" class="form-control" placeholder="Enter search term...">
-            <button type="submit" class="btn btn-primary">Search</button>
+    <form method="get" asp-action="Search" class="mb-5">
+        <div class="input-group input-group-lg shadow-sm mb-3">
+            <input type="text" name="query" class="form-control form-control-lg" placeholder="اكتب كلمة البحث..." value="@Context.Request.Query["query"]" style="max-width: 500px; margin: 0 auto;" />
+        </div>
+        <div class="d-flex justify-content-center gap-3">
+            <button type="submit" class="btn btn-primary px-4" name="sortBy" value="">بحث</button>
+            <button type="submit" class="btn btn-secondary px-4" name="sortBy" value="count">ترتيب بعدد التكرارات</button>
         </div>
     </form>
 
     @if (Model != null && Model.Any())
-
     {
-        <table class="table table-striped">
-            <thead>
-                <tr>
-
-                    <th>PageRank</th>
-                    <th>Word</th>
-                    <th>Count</th>
-                    <th>URL</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var result in Model)
-
-                {
-                    <tr>
-
-                        <td>@result.PageRank.ToString("F6")</td>
-                        <td>@result.Word</td>
-                        <td>@result.Count</td>
-                        <td><a href="@result.Url" target="_blank">@result.Url</a></td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+        <div class="card shadow-sm">
+            <div class="card-body p-0">
+                <table class="table table-hover table-striped mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">PageRank</th>
+                            <th scope="col">الكلمة</th>
+                            <th scope="col">عدد التكرارات</th>
+                            <th scope="col">الرابط</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var result in Model)
+                        {
+                            <tr>
+                                <td>@result.PageRank.ToString("F6")</td>
+                                <td>@result.Word</td>
+                                <td>@result.Count</td>
+                                <td><a href="@result.Url" target="_blank">@result.Url</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
     }
-
     else if (Context.Request.Query.ContainsKey("query"))
     {
-        <div class="alert alert-info">No results found.</div>
+        <div class="alert alert-info text-center mt-4">لم يتم العثور على نتائج.</div>
     }
 </div>
