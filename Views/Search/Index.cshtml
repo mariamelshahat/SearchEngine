@@ -1,0 +1,46 @@
+﻿@model IEnumerable<SearchResult>
+
+<div class="container mt-4">
+    <h2>Search Engine</h2>
+
+    <form method="get" asp-action="Search" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="query" class="form-control" placeholder="Enter search term...">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+
+    @if (Model != null && Model.Any())
+
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+
+                    <th>PageRank</th>
+                    <th>Word</th>
+                    <th>Count</th>
+                    <th>URL</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var result in Model)
+
+                {
+                    <tr>
+
+                        <td>@result.PageRank.ToString("F6")</td>
+                        <td>@result.Word</td>
+                        <td>@result.Count</td>
+                        <td><a href="@result.Url" target="_blank">@result.Url</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    else if (Context.Request.Query.ContainsKey("query"))
+    {
+        <div class="alert alert-info">No results found.</div>
+    }
+</div>
