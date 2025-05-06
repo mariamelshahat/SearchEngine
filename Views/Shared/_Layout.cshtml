@@ -3,13 +3,12 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Goocle</title>
+    <title>@ViewData["Title"] - Kookle</title>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SearchEngine.styles.css" asp-append-version="true" />
-
 
     <style>
         body {
@@ -25,7 +24,15 @@
         .navbar-brand {
             font-weight: bold;
             color: #0d6efd !important;
+            display: flex;
+            align-items: center;
         }
+
+            .navbar-brand img {
+                width: 32px;
+                height: 32px;
+                margin-right: 10px;
+            }
 
         .navbar-nav .nav-link {
             font-size: 1.1rem;
@@ -50,10 +57,12 @@
     </style>
 </head>
 <body>
-    <header>
+   @*  <header>
         <nav class="navbar navbar-expand-sm navbar-light border-bottom mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Goocle</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/kookle-logo-circle.png" alt="Kookle Logo" />
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -71,16 +80,22 @@
             </div>
         </nav>
     </header>
-
+ *@
     <div class="container">
         <main role="main" class="pb-5">
             @RenderBody()
         </main>
     </div>
+    <div class="container d-flex justify-content-center">
+        <main role="main" class="pb-5">
+            @RenderBody()
+        </main>
+    </div>
+
 
     <footer class="footer text-muted">
         <div class="container text-center">
-            &copy; 2025 - Goocle - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2025 - Kookle - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
 
