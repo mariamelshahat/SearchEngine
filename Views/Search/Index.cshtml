@@ -1,4 +1,16 @@
 ﻿@model IEnumerable<SearchResult>
+<style>
+    .text-decoration-underline-hover:hover {
+        text-decoration: underline;
+    }
+
+    .link-item:hover {
+        background-color: rgba(0, 123, 255, 0.1); /* تغيير خلفية العنصر */
+        box-shadow: 0 0 15px rgba(0, 123, 255, 0.6); /* إضافة ظل للعنصر */
+        transform: translateY(-5px); /* رفع العنصر قليلاً */
+        transition: all 0.3s ease; /* تأثير سلس عند التغيير */
+    }
+</style>
 
 <div class="container mt-5">
     <div class="text-center mb-4">
@@ -6,23 +18,24 @@
         <p class="lead text-muted">Search for keywords in web pages ranked by relevance</p>
     </div>
 
-   @*  <div class="text-center mb-4"> *@
-        @* <h1 class="display-5 fw-bold text-primary">Goocle – Semantic Web Search</h1> *@
-        @* <p class="lead text-muted">Search for keywords in web pages ranked by relevance</p> *@
-    @* </div> *@
-
     <!-- Search Card -->
     <div class="card mx-auto shadow-sm border-0 mb-5" style="max-width: 700px;">
         <div class="card-body py-4 px-4">
             <form method="get" asp-action="Search" id="search-form">
-                <div class="mb-3">
-                    <input type="text" name="query" class="form-control form-control-lg rounded-3 text-center"
+                <div class="mb-3 text-center">
+                    <input type="text" name="query"
+                           class="form-control form-control-lg rounded-3 mx-auto text-center"
+                           style="max-width: 500px;"
                            placeholder="Type a keyword to search..."
                            value="@Context.Request.Query["query"]" />
                 </div>
-                <div class="d-flex justify-content-center gap-3 mt-3">
-                    <button type="submit" class="btn btn-primary px-4 rounded-3 shadow-sm" name="sortBy" value="">🔍 Search</button>
-                    <button type="submit" class="btn btn-outline-secondary px-4 rounded-3 shadow-sm" name="sortBy" value="count">📊 Sort by Count</button>
+                <div class="text-center mt-3 d-flex justify-content-center gap-3">
+                    <button type="submit" class="btn btn-primary px-4 py-2 rounded-3 shadow-sm" name="sortBy" value="">
+                        🔍 Search
+                    </button>
+                    <button type="submit" class="btn btn-outline-secondary px-4 py-2 rounded-3 shadow-sm" name="sortBy" value="count">
+                        📊 Sort by Count
+                    </button>
                 </div>
             </form>
         </div>
@@ -31,30 +44,24 @@
     <!-- Search Results -->
     @if (Model != null && Model.Any())
     {
-        <div class="card shadow-lg border-0">
-            <div class="card-header bg-primary text-white">
-                <h5 class="mb-0">Search Results</h5>
-            </div>
-            <div class="card-body p-0">
-                <div class="table-responsive">
-                    <table class="table table-hover table-striped table-bordered mb-0 align-middle">
-                        <thead class="table-light text-center">
-                            <tr>
-                                <th scope="col">Count</th>
-                                <th scope="col">URL</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var result in Model)
-                            {
-                                <tr>
-                                    <td class="text-center">@result.Count</td>
-                                    <td><a href="@result.Url" target="_blank" class="text-decoration-none">@result.Url</a></td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
+        <div class="mb-5">
+            <div class="d-flex flex-column gap-3">
+                @foreach (var result in Model)
+                {
+                    <div class="border rounded-3 shadow-sm p-3 d-flex flex-column flex-md-row justify-content-between align-items-start link-item">
+                        <div class="mb-2 mb-md-0">
+                            <a href="@result.Url" target="_blank" class="fw-semibold link-primary text-decoration-underline-hover">
+                                🌐 @result.Url
+                            </a>
+                        </div>
+                        <div class="text-muted small">
+                            <span class="badge bg-secondary">Count: @result.Count</span>
+                        </div>
+                        @* <div class="text-muted small"> *@
+                        @*     <span class="badge bg-secondary">Page: @result.PageRank</span> *@
+                        @* </div> *@
+                    </div>
+                }
             </div>
         </div>
     }
@@ -77,14 +84,14 @@
 
             if (form && sound) {
                 form.addEventListener("submit", function (event) {
-                    event.preventDefault();  // Prevent the form from submitting immediately
+                    event.preventDefault();  // Prevent immediate submission
 
                     // Play the sound
                     sound.play();
 
-                    // Wait for the sound to finish before submitting the form
+                    // Submit after sound ends
                     sound.onended = function () {
-                        form.submit();  // Now submit the form after the sound ends
+                        form.submit();
                     };
                 });
             }
