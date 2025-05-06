@@ -18,28 +18,40 @@
         <p class="lead text-muted">Search for keywords in web pages ranked by relevance</p>
     </div>
 
-    <!-- Search Card -->
-    <div class="card mx-auto shadow-sm border-0 mb-5" style="max-width: 700px;">
-        <div class="card-body py-4 px-4">
-            <form method="get" asp-action="Search" id="search-form">
-                <div class="mb-3 text-center">
-                    <input type="text" name="query"
-                           class="form-control form-control-lg rounded-3 mx-auto text-center"
-                           style="max-width: 500px;"
-                           placeholder="Type a keyword to search..."
-                           value="@Context.Request.Query["query"]" />
-                </div>
-                <div class="text-center mt-3 d-flex justify-content-center gap-3">
-                    <button type="submit" class="btn btn-primary px-4 py-2 rounded-3 shadow-sm" name="sortBy" value="">
-                        🔍 Search
-                    </button>
-                    <button type="submit" class="btn btn-outline-secondary px-4 py-2 rounded-3 shadow-sm" name="sortBy" value="count">
-                        📊 Sort by Count
-                    </button>
-                </div>
-            </form>
-        </div>
+    <!-- Kookle-style Search Bar -->
+    <div class="d-flex flex-column align-items-center mb-5">
+        <form method="get" asp-action="Search" id="search-form" class="w-100" style="max-width: 700px;">
+            <div class="input-group shadow rounded-pill overflow-hidden bg-white">
+               
+                <input type="text" name="query"
+                       class="form-control border-0 text-center"
+                       placeholder="Type a keyword to search..."
+                       value="@Context.Request.Query["query"]"
+                       style="height: 50px;" />
+                @* <span class="input-group-text bg-white border-0">
+                    🎤
+                </span>
+                <span class="input-group-text bg-white border-0">
+                    📷
+                </span> *@
+                <span class="input-group-text bg-white border-0">
+                    🔍
+                </span>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="text-center mt-4 d-flex justify-content-center gap-3">
+                <button type="submit" class="btn btn-primary px-4 py-2 rounded-pill shadow-sm" name="sortBy" value="">
+                    🔍 Search
+                </button>
+                <button type="submit" class="btn btn-outline-secondary px-4 py-2 rounded-pill shadow-sm" name="sortBy" value="count">
+                    📊 Sort by Count
+                </button>
+            </div>
+        </form>
     </div>
+
+
 
     <!-- Search Results -->
     @if (Model != null && Model.Any())

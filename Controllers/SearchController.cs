@@ -25,25 +25,13 @@ public class SearchController : Controller
     //    var results = await _searchService.SearchAsync(query);
     //    return View("Index", results);
     //}
-    public async Task<IActionResult> Search ( string query, string sortBy )
+    public async Task<IActionResult> Search(string query, string sortBy = "pagerank")
     {
-        if (string.IsNullOrEmpty ( query ))
-        {
-            return View ( "Index", new List<SearchResult> () );
-        }
+        if (string.IsNullOrEmpty(query))
+            return View(new List<SearchResult>());
 
-        var results = await _searchService.SearchAsync ( query );
-
-        if (sortBy == "count")
-        {
-            results = results.OrderByDescending ( r => r.Count ).ToList ();
-        }
-        if (sortBy == "pagerank")
-        {
-            results = results.OrderByDescending ( r => r.PageRank ).ToList ();
-        }
-
-        return View ( "Index", results );
+        var results = await _searchService.SearchAsync(query, sortBy);
+        return View("Index", results);
     }
 
 }
