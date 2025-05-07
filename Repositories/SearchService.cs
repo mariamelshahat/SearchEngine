@@ -26,9 +26,7 @@ public class SearchService : ISearchService
                 .Include ( w => w.UrlWithRank )
                 .Where ( w => w.Word == word );
 
-            query = sortBy?.ToLower () == "count"
-                ? query.OrderByDescending ( w => w.Count )
-                : query.OrderByDescending ( w => w.UrlWithRank.PageRank );
+            query =  query.OrderByDescending ( w => w.UrlWithRank.PageRank );
 
             return await query.Select ( w => new SearchResult
             {
@@ -67,9 +65,7 @@ public class SearchService : ISearchService
                     SecondWordCount = r2.Count
                 } );
 
-            return sortBy?.ToLower () == "count"
-                ? joined.OrderByDescending ( r => r.FirstWordCount + r.SecondWordCount ?? 0 ).ToList ()
-                : joined.OrderByDescending ( r => r.PageRank ).ToList ();
+            return joined.OrderByDescending ( r => r.PageRank ).ToList ();
         }
         return new List<SearchResult> ();
 

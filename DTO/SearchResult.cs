@@ -6,6 +6,6 @@
     public string FirstWord { get; set; }
     public int FirstWordCount { get; set; }
 
-    public string? SecondWord { get; set; }  // Nullable for single-word queries
+    public string? SecondWord { get; set; }  
     public int? SecondWordCount { get; set; }
 }

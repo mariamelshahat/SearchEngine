@@ -5,10 +5,10 @@
     }
 
     .link-item:hover {
-        background-color: rgba(0, 123, 255, 0.1); /* تغيير خلفية العنصر */
-        box-shadow: 0 0 15px rgba(0, 123, 255, 0.6); /* إضافة ظل للعنصر */
-        transform: translateY(-5px); /* رفع العنصر قليلاً */
-        transition: all 0.3s ease; /* تأثير سلس عند التغيير */
+        background-color: rgba(0, 123, 255, 0.1); 
+        box-shadow: 0 0 15px rgba(0, 123, 255, 0.6); 
+        transform: translateY(-5px);
+        transition: all 0.3s ease;
     }
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
@@ -30,13 +30,7 @@
                        class="form-control border-0 text-center"
                        placeholder="Type a keyword to search..."
                        value="@Context.Request.Query["query"]"
-                       style="height: 50px;" />
-                @* <span class="input-group-text bg-white border-0">
-                    🎤
-                </span>
-                <span class="input-group-text bg-white border-0">
-                    📷
-                </span> *@
+                       style="height: 50px;" 
                 <span class="input-group-text bg-white border-0">
                     🔍
                 </span>
@@ -47,16 +41,12 @@
                 <button type="submit" class="btn btn-primary px-4 py-2 rounded-pill shadow-sm" name="sortBy" value="">
                     🔍 Search
                 </button>
-                <button type="submit" class="btn btn-outline-secondary px-4 py-2 rounded-pill shadow-sm" name="sortBy" value="count"> 
-                    📊 Sort by Count
-                </button>
             </div>
         </form>
     </div>
 
 
-
-    <!-- Search Results -->
+    
     @if (Model != null && Model.Any())
     {
         <div class="mb-5">
@@ -64,12 +54,11 @@
                 @foreach (var result in Model)
                 {
                     <div class="border rounded-3 shadow-sm p-3 d-flex flex-column gap-2 link-item">
-                        <!-- URL -->
+                        
                         <a href="@result.Url" target="_blank" class="fw-semibold link-primary text-decoration-underline-hover">
                             🌐 @result.Url
                         </a>
-
-                        <!-- Word counts -->
+                        @* <a>@result.PageRank</a> *@
                         <div class="text-muted small d-flex flex-wrap gap-2">
                             @if (!string.IsNullOrEmpty(result.FirstWord))
                             {
@@ -92,7 +81,7 @@
             </div>
         </div>
     }
-    else if (Context.Request.Query.ContainsKey("query"))
+    else if (Context.Request.Query.ContainsKey("query") && !string.IsNullOrWhiteSpace(Context.Request.Query["query"]))
     {
         <div class="alert alert-info text-center mt-4 shadow-sm">
             No results found.

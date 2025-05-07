@@ -20,16 +20,11 @@ public class SearchEngineContext : DbContext
         modelBuilder.Entity<Urlswithranks>()
             .HasKey(p => p.URL);
 
-        // Configure the relationship between inverted_index and Urlswithranks
         modelBuilder.Entity<inverted_index>()
             .HasOne(w => w.UrlWithRank)
             .WithMany(u => u.InvertedIndices)
             .HasForeignKey(w => w.FileId)
             .HasPrincipalKey(u => u.FileName);
 
-        // Configure the conversion for FileName to match FileId
-        //modelBuilder.Entity<Urlswithranks>()
-        //    .Property(u => u.FileName)
-        //    .HasComputedColumnSql("CONCAT(FileId, '.txt')");
     }
 }
