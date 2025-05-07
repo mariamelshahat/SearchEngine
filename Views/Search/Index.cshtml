@@ -25,7 +25,7 @@
     <div class="d-flex flex-column align-items-center mb-5">
         <form method="get" asp-action="Search" id="search-form" class="w-100" style="max-width: 700px;">
             <div class="input-group shadow rounded-pill overflow-hidden bg-white">
-               
+
                 <input type="text" name="query"
                        class="form-control border-0 text-center"
                        placeholder="Type a keyword to search..."
@@ -47,9 +47,9 @@
                 <button type="submit" class="btn btn-primary px-4 py-2 rounded-pill shadow-sm" name="sortBy" value="">
                     🔍 Search
                 </button>
-                <button type="submit" class="btn btn-outline-secondary px-4 py-2 rounded-pill shadow-sm" name="sortBy" value="count"> 
-                     📊 Sort by Count
-                </button>
+                @* <button type="submit" class="btn btn-outline-secondary px-4 py-2 rounded-pill shadow-sm" name="sortBy" value="count"> 
+                    📊 Sort by Count
+                </button> *@
             </div>
         </form>
     </div>
@@ -63,20 +63,32 @@
             <div class="d-flex flex-column gap-3">
                 @foreach (var result in Model)
                 {
-                    <div class="border rounded-3 shadow-sm p-3 d-flex flex-column flex-md-row justify-content-between align-items-start link-item">
-                        <div class="mb-2 mb-md-0">
-                            <a href="@result.Url" target="_blank" class="fw-semibold link-primary text-decoration-underline-hover">
-                                🌐 @result.Url
-                            </a>
+                    <div class="border rounded-3 shadow-sm p-3 d-flex flex-column gap-2 link-item">
+                        <!-- URL -->
+                        <a href="@result.Url" target="_blank" class="fw-semibold link-primary text-decoration-underline-hover">
+                            🌐 @result.Url
+                        </a>
+
+                        <!-- Word counts -->
+                        <div class="text-muted small d-flex flex-wrap gap-2">
+                            @if (!string.IsNullOrEmpty(result.FirstWord))
+                            {
+                                <span class="badge bg-info text-dark">
+                                    @result.FirstWord: @result.FirstWordCount
+                                </span>
+                            }
+                            @if (!string.IsNullOrEmpty(result.SecondWord))
+                            {
+                                <span class="badge bg-info text-dark">
+                                    @result.SecondWord: @result.SecondWordCount
+                                </span>
+                            }
                         </div>
-                        <div class="text-muted small">
-                            <span class="badge bg-secondary">Count: @result.Count</span>
-                        </div>
-                        @* <div class="text-muted small"> *@
-                        @*     <span class="badge bg-secondary">Page: @result.PageRank</span> *@
-                        @* </div> *@
                     </div>
+
                 }
+
+
             </div>
         </div>
     }

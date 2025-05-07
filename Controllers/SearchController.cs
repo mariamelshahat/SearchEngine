@@ -28,7 +28,7 @@ public class SearchController : Controller
     public async Task<IActionResult> Search(string query, string sortBy = "pagerank")
     {
         if (string.IsNullOrEmpty(query))
-            return View(new List<SearchResult>());
+            return View("Index",new List<SearchResult>());
 
         var results = await _searchService.SearchAsync(query, sortBy);
         return View("Index", results);
